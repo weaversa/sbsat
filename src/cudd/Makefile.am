@@ -1,3 +1,0 @@
-SUBDIRS=cudd epd util include mtr st
-EXTRA_DIST=LICENSE README RELEASE.NOTES
-
