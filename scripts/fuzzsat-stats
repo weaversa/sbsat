@@ -1,0 +1,2 @@
+rm -rf fuzzsat_sbsat_stats.csv
+while ((1)); do ../../fuzzsat-0.1/fuzzsat > /tmp/test.cnf; ./sbsat -f --clause-overlap 2 --stats-file fuzzsat_sbsat_stats.csv /tmp/test.cnf; if [ $? != 0 ] ; then break; fi; done

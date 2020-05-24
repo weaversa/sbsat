@@ -1,0 +1,1 @@
+for i in {0..14}; do time ./sbsat ../../itedata/BDD/dlx2_cc.cnf --debug 3 -f --bdd-ordering $i ; done;

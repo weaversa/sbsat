@@ -1,0 +1,2 @@
+rm -rf wildbenches2009_sbsat_stats.csv
+find ../../itedata/WildBenches2009 -name "*.cnf*" -exec ./sbsat '{}' --debug 1 -f --stats-file wildbenches2009_sbsat_stats.csv -ram 2500 -time 500 \;

@@ -1,0 +1,25 @@
+while ((1)); do
+  ../../fuzzsat-0.1/fuzzsat -I 10 > /tmp/test.cnf;
+  ./sbsat -ve 0 -seed 1 -s p --debug 0 /tmp/test.cnf >& /tmp/picosat ;
+
+  ./sbsat -f -ve -1 -cvl 10 -seed 1 -s p --debug 0 /tmp/test.cnf >& /tmp/sbsat_picosat ;
+  diff /tmp/picosat /tmp/sbsat_picosat ;
+  OUT=$? ;
+  if [ $OUT -eq 0 ];then
+      echo -n "*";
+  else
+      echo "picosat and sbsat_picosat outputs differ!" ;
+      break ;
+  fi ;
+
+  ./sbsat -f -ve -1 -cvl 10 -seed 1 -s f --debug 0 /tmp/test.cnf >& /tmp/sbsat_funcsat ;
+  diff /tmp/picosat /tmp/sbsat_funcsat ;
+  OUT=$? ;
+  if [ $OUT -eq 0 ];then
+      echo -n "*";
+  else
+      echo "picosat and sbsat_funcsat outputs differ!" ;
+      break ;
+  fi ;
+
+done

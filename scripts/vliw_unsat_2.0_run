@@ -1,0 +1,2 @@
+rm -rf vliw_unsat_2.0_sbsat_stats.csv
+find ../../itedata/vliw_unsat_2.0 -name "*.cnf*" -exec ./sbsat '{}' --debug 2 -f --stats-file vliw_unsat_2.0_sbsat_stats.csv \;

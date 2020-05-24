@@ -1,0 +1,208 @@
+/* @TYPE@ -- element type
+   @SHORTNAME@ -- used to name all operations
+*/
+
+#ifndef vec_@SHORTNAME@_h_included
+#define vec_@SHORTNAME@_h_included
+
+#include <inttypes.h>
+#include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct vec_@SHORTNAME@
+{
+  @TYPE@ *data;
+
+  uintptr_t size;
+  uintptr_t capacity;
+};
+
+/**
+ * Iterate over a struct vec_@SHORTNAME@. `elt' will be declared as an
+ * identifier of type `@TYPE@ *' in the body of the iterator.
+ *
+ *   for_vec_bv(elt, vec) {
+ *     ... do something with *elt ...
+ *   }
+ */
+#define for_vec_@SHORTNAME@(elt, vec)                                   \
+  for (@TYPE@ *elt = (vec)->data; elt != ((vec)->data + (vec)->size); elt++)
+
+/**
+ * Same as the for_vec_@SHORTNAME@ variant except declares the given type in the
+ * clause head and casts the data pointer as that type. The 99 refers to
+ * C99-style declaration. (shrug)
+ */
+#define for_vec_@SHORTNAME@99(ty, elt, vec)                             \
+  for (ty elt = (ty)(vec)->data; elt != (ty)((vec)->data + (vec)->size); elt++)
+
+/**
+ * Same arguments as for_vec_@SHORTNAME@, but iterates over elements in the
+ * reverse order.
+ */
+#define for_vec_@SHORTNAME@_rev(elt, vec)                               \
+  for (@TYPE@ *elt = ((vec)->data + (vec)->size - 1); elt != ((vec)->data - 1); elt--)
+
+/**
+ * Same as the for_vec_@SHORTNAME@_rev variant except declares the given type in
+ * the clause head and casts the data pointer as that type. The 99 refers to
+ * C99-style declaration. (shrug)
+ */
+#define for_vec_@SHORTNAME@_rev99(ty, elt, vec)                         \
+  for (ty elt = (ty)((vec)->data + (vec)->size - 1); elt != (ty)((vec)->data - 1); elt--)
+
+
+
+static inline struct vec_@SHORTNAME@ *vec_@SHORTNAME@_create(uintptr_t capacity);
+#define vec_@SHORTNAME@_init vec_@SHORTNAME@_create
+static inline void vec_@SHORTNAME@_destroy(struct vec_@SHORTNAME@ *v);
+static inline void vec_@SHORTNAME@_mk(struct vec_@SHORTNAME@ *v, uintptr_t capacity);
+static inline void vec_@SHORTNAME@_unmk(struct vec_@SHORTNAME@ *v);
+static inline void vec_@SHORTNAME@_setall(struct vec_@SHORTNAME@ *v, @TYPE@ val);
+/**
+ * Sets the size to 0.
+ */
+static inline void vec_@SHORTNAME@_clear(struct vec_@SHORTNAME@ *v);
+/**
+ * Sets every location (0 to size-1) to 0.
+ */
+static inline void vec_@SHORTNAME@_zero(struct vec_@SHORTNAME@ *v);
+static inline void vec_@SHORTNAME@_push(struct vec_@SHORTNAME@ *v, @TYPE@ data);
+static inline void vec_@SHORTNAME@_push_at(struct vec_@SHORTNAME@ *v, @TYPE@ data, uintptr_t i);
+/* returns the old capacity */
+static inline uintptr_t vec_@SHORTNAME@_grow_to(struct vec_@SHORTNAME@ *v, uintptr_t newCapacity);
+static inline @TYPE@ vec_@SHORTNAME@_pop(struct vec_@SHORTNAME@ *v);
+static inline @TYPE@ vec_@SHORTNAME@_pop_at(struct vec_@SHORTNAME@ *v, uintptr_t i);
+static inline @TYPE@ vec_@SHORTNAME@_peek(struct vec_@SHORTNAME@ *v);
+#define vec_@SHORTNAME@_get(v,i) ((v)->data[(i)])
+static inline void vec_@SHORTNAME@_set(struct vec_@SHORTNAME@ *v, uintptr_t i, @TYPE@ p);
+static inline void vec_@SHORTNAME@_copy(struct vec_@SHORTNAME@ *dst, struct vec_@SHORTNAME@ *src);
+
+static inline struct vec_@SHORTNAME@ *vec_@SHORTNAME@_create(uintptr_t capacity)
+{
+  struct vec_@SHORTNAME@ *r = calloc(1, sizeof(*r));
+  vec_@SHORTNAME@_mk(r, capacity);
+  return r;
+}
+
+static inline void vec_@SHORTNAME@_destroy(struct vec_@SHORTNAME@ *v)
+{
+  vec_@SHORTNAME@_unmk(v);
+  free(v);
+}
+
+static inline void vec_@SHORTNAME@_mk(struct vec_@SHORTNAME@ *v, uintptr_t capacity)
+{
+  uintptr_t c = capacity > 0 ? capacity : 4;
+  v->data = calloc(c, sizeof(@TYPE@));
+  v->size = 0;
+  v->capacity = c;
+}
+
+static inline void vec_@SHORTNAME@_unmk(struct vec_@SHORTNAME@ *v)
+{
+  free(v->data);
+  v->data = NULL;
+  v->size = 0;
+  v->capacity = 0;
+}
+
+static inline void vec_@SHORTNAME@_clear(struct vec_@SHORTNAME@ *v)
+{
+  v->size = 0;
+}
+
+static inline void vec_@SHORTNAME@_zero(struct vec_@SHORTNAME@ *v)
+{
+  memset(v->data, 0, sizeof(@TYPE@)*v->size);
+}
+
+static inline void vec_@SHORTNAME@_setall(struct vec_@SHORTNAME@ *v, @TYPE@ val)
+{
+  for (uintptr_t i = 0; i < v->size; i++) {
+    v->data[i] = val;
+  }
+}
+
+static inline void vec_@SHORTNAME@_push(struct vec_@SHORTNAME@ *v, @TYPE@ data)
+{
+  if (v->capacity <= v->size) {
+    if (v->capacity == 0) v->capacity = 1;
+    while (v->capacity <= v->size) {
+      v->capacity = v->capacity*2;
+    }
+    void *tmp = realloc(v->data, v->capacity*sizeof(@TYPE@));
+    v->data = tmp;
+  }
+  v->data[v->size++] = data;
+}
+
+static inline void vec_@SHORTNAME@_push_at(struct vec_@SHORTNAME@ *v, @TYPE@ data, uintptr_t i)
+{
+  uintptr_t j;
+  assert(i <= v->size);
+  if (v->capacity <= v->size) {
+    while (v->capacity <= v->size) {
+      v->capacity = v->capacity*2;
+    }
+    void *tmp = realloc(v->data, v->capacity*sizeof(@TYPE@));
+    v->data = tmp;
+  }
+  v->size++;
+  for (j = v->size-1; j > i; j--) {
+    v->data[j] = v->data[j-1];
+  }
+  v->data[i] = data;
+}
+
+
+static inline uintptr_t vec_@SHORTNAME@_grow_to(struct vec_@SHORTNAME@ *v, uintptr_t newCapacity)
+{
+  uintptr_t ret = v->capacity;
+  if (v->capacity < newCapacity) {
+    v->capacity = newCapacity;
+    v->data = realloc(v->data, v->capacity*sizeof(@TYPE@));
+  }
+  assert(v->capacity >= newCapacity);
+  return ret;
+}
+
+
+static inline @TYPE@ vec_@SHORTNAME@_pop(struct vec_@SHORTNAME@ *v)
+{
+  assert(v->size != 0);
+  return v->data[v->size-- - 1];
+}
+
+static inline @TYPE@ vec_@SHORTNAME@_pop_at(struct vec_@SHORTNAME@ *v, uintptr_t i)
+{
+  uintptr_t j;
+  assert(v->size != 0);
+  @TYPE@ res = v->data[i];
+  for (j = i; j < v->size-1; j++) {
+    v->data[j] = v->data[j+1];
+  }
+  v->size--;
+  return res;
+}
+
+static inline @TYPE@ vec_@SHORTNAME@_peek(struct vec_@SHORTNAME@ *v)
+{
+  assert(v->size != 0);
+  return v->data[v->size-1];
+}
+
+static inline void vec_@SHORTNAME@_set(struct vec_@SHORTNAME@ *v, uintptr_t i, @TYPE@ p)
+{
+  v->data[i] = p;
+}
+
+static inline void vec_@SHORTNAME@_copy(struct vec_@SHORTNAME@ *dst, struct vec_@SHORTNAME@ *src)
+{
+  for (uintptr_t i = 0; i < src->size; i++) {
+    vec_@SHORTNAME@_push(dst, src->data[i]);
+  }
+}
+
+#endif
