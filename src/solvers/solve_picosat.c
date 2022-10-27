@@ -1,6 +1,5 @@
 #include "sbsat.h"
 #include "solver.h"
-#include "picosat/picosat.h"
 
 extern void picosat_enter (void);
 extern void picosat_leave (void);

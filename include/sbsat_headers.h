@@ -88,18 +88,15 @@
 #if HAVE_MATH_H
 # include <math.h>
 #endif
-#if HAVE_REGEX_H
-# include <regex.h>
-#endif
 #if HAVE_TERMCAP_H
 # include <termcap.h>
 #endif
 #if HAVE_TERMIOS_H
 # include <termios.h>
 #endif
-#if HAVE_GMP_H
-# include <gmp.h>
-#endif
+
+#include <gmp.h>
+#include <regex.h>
 
 #ifndef INT_MAX
 #define INT_MAX 0x7FFFFFFF
