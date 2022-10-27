@@ -503,6 +503,7 @@ typedef void (*DD_TOHFP)(DdManager *, void *);
 extern "C" {
 #endif
 
+extern void ddClearFlag (DdNode *f);
 extern DdNode * Cudd_addNewVar(DdManager *dd);
 extern DdNode * Cudd_addNewVarAtLevel(DdManager *dd, int level);
 extern DdNode * Cudd_bddNewVar(DdManager *dd);

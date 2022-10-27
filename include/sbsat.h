@@ -29,9 +29,8 @@
 #include "../lib/cudd/include/cudd.h"
 #include "../lib/cudd/include/cuddInt.h"
 #include "aiger.h"
-#include "../lib/picosat/include/picosat.h"
-#include "../src/solvers/gelim/gelim_solver.h"
-#include "../lib/funcsat/src/funcsat.h"
+//#include "../lib/picosat/include/picosat.h"
+//#include "../src/solvers/gelim/gelim_solver.h"
 #include "equiv.h"
 #include "inference_queue.h"
 #include "bdd_manager.h"
@@ -45,7 +44,7 @@
 #include "sbsat_formats.h"
 #include "sbsat_utils.h"
 #include "symtable.h"
-#include "../src/solvers/smurf/include/solver.h"
+//#include "../src/solvers/smurf/include/solver.h"
 #include "sbsat_solvers.h"
 
 #endif

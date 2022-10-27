@@ -898,7 +898,7 @@ DdNode *putite(BDDManager *BM, intmax_t intnum, DdNode *bdd) {
       //Cudd_RecursiveDeref(BM->dd, v1);
     }
     strcpy (macros, "print_smurf_dot_stdout");
-    //PrintSmurfs(BM, put_dot_bdds, numarguments);
+    PrintSmurfs(BM, put_dot_bdds, numarguments);
     for(int i = 0; i < numarguments; i++)
       Cudd_IterDerefBdd(BM->dd, put_dot_bdds[i]);
     sbsat_free((void**)&put_dot_bdds);
@@ -980,7 +980,6 @@ DdNode *putite(BDDManager *BM, intmax_t intnum, DdNode *bdd) {
     Cudd_Ref(Cudd_ReadOne(BM->dd));
     return Cudd_ReadOne(BM->dd);
   }
-  /*
   if (!strcasecmp (macros, "gelim_preload_file")) {
     order = getNextIteSymbol (BM, &intnum, &bdd);
     if(order != 'm') {
@@ -996,7 +995,7 @@ DdNode *putite(BDDManager *BM, intmax_t intnum, DdNode *bdd) {
     }
     Cudd_Ref(Cudd_ReadOne(BM->dd));    
     return Cudd_ReadOne(BM->dd);
-  }*/
+  } 
   if (!strcasecmp (macros, "same")) {
     DdNode *v1, *v2, *v3, *bTemp;
     v1 = putite(BM, intnum, bdd);

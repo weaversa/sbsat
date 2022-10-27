@@ -16,7 +16,7 @@ CFLAGS = -std=gnu99 $(DBG) $(OPT) $(INCLUDES)
 AR = ar r
 RANLIB = ranlib
 
-all: depend lib/lib$(SBSATLIB).a
+all: depend bin/sbsat lib/lib$(SBSATLIB).a
 
 depend: .depend
 .depend: $(SOURCES)
@@ -34,22 +34,24 @@ endif
 lib/cudd/lib/libcudd.a:
 	@cd lib/cudd && $(MAKE)
 
-lib/picosat/lib/libpicosat.a:
-	@cd lib/picosat && $(MAKE)
-
 $(OBJECTS): obj/%.o : src/%.c Makefile
 	@echo "Compiling "$<
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-lib/lib$(SBSATLIB).a: $(OBJECTS) Makefile lib/cudd/lib/libcudd.a lib/picosat/lib/libpicosat.a
+lib/lib$(SBSATLIB).a: $(OBJECTS) Makefile lib/cudd/lib/libcudd.a
 	@echo "Creating "$@""
 	@[ -d lib ] || mkdir -p lib
 	@rm -f $@
 	@cp lib/cudd/lib/libcudd.a $@
-	@cp lib/picosat/lib/libpicosat.a $@
 	@$(AR) $@ $(OBJECTS)
 	@$(RANLIB) $@
+
+bin/sbsat: $(OBJECTS) Makefile lib/cudd/lib/libcudd.a
+	@echo "Creating "$@""
+	@[ -d bin ] || mkdir -p bin
+	@rm -f $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJECTS) -Llib/cudd/lib -lcudd -lgmp -o $@
 
 test/test: test/test.c lib/lib$(SBSATLIB).a
 	$(CC) $(CFLAGS) $(LDFLAGS) test/test.c -o test/test $(LIBS)

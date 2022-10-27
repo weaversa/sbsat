@@ -27,7 +27,7 @@ void handle_sigalrm(int unused) {
     return;
   }
 
-  if(0) {  //check_limits()!=NO_ERROR) {
+  if(check_limits()!=NO_ERROR) {
 
     //Turn off timer
     struct itimerval it_val; // for setting itimer

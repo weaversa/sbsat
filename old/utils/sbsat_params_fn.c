@@ -608,7 +608,7 @@ show_ini()
    FILE *stdini=stdout;
 
    fprintf(stdini, "# \n");
-   //fprintf(stdini, "# %s Version %s %s\n", PACKAGE, VERSION, COPYRIGHT);
+   fprintf(stdini, "# %s Version %s %s\n", PACKAGE, VERSION, COPYRIGHT);
    fprintf(stdini, "# \n");
    for (i=0;!(options[i].p_target==NULL&&options[i].desc_opt[0]==0);i++)
    {
@@ -791,8 +791,8 @@ show_help()
 void
 show_version()
 {
-  //   fprintf(stdout, "%s %s\n\n%s\n\nWritten by %s.\n", 
-  //           PACKAGE, VERSION, COPYRIGHT, AUTHORS);
+   fprintf(stdout, "%s %s\n\n%s\n\nWritten by %s.\n", 
+         PACKAGE, VERSION, COPYRIGHT, AUTHORS);
    exit(0);
 }
 

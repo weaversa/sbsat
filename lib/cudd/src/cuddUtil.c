@@ -3839,7 +3839,7 @@ ddSupportStep(
   @see ddSupportStep ddFindSupport ddLeavesInt ddDagInt
 
 */
-static void
+void
 ddClearFlag(
   DdNode * f)
 {

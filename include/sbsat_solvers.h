@@ -38,7 +38,8 @@
 #ifndef SBSAT_SOLVERS_H
 #define SBSAT_SOLVERS_H
 
-/* list of available heuristics */
+/*
+  
 enum {
    NULL_HEURISTIC,
    JOHNSON_HEURISTIC,
@@ -58,7 +59,6 @@ extern t_solution_info *solution_info;
 extern t_solution_info *solution_info_head;
 
 extern SmurfManager *SM_main;
-extern funcsat *FS_main;
 
 SmurfManager *Init_SmurfManager(BDDManager *BM);
 uint8_t ReadAllSmurfsIntoTable(SmurfManager *SM, BDDManager *BM);
@@ -70,8 +70,7 @@ int picosatSolve();
 void PrintAllSmurfStateEntries();
 uint8_t PrintSmurfs(BDDManager *BM, DdNode **bdds, uintmax_t nLength);
 
-SmurfManager *Init_SmurfSolver(BDDManager *BM, funcsat *FS);
-SmurfManager *Init_SmurfSolver_funcsat(BDDManager *BM, funcsat *FS);
+SmurfManager *Init_SmurfSolver(BDDManager *BM);
 SmurfManager *Init_SmurfSolver_picosat(BDDManager *BM, PicosatManager *PM);
 
 extern char solver_flag;
@@ -87,5 +86,7 @@ extern float JHEURISTIC_K;
 extern float JHEURISTIC_K_TRUE;
 extern float JHEURISTIC_K_INF;
 extern float JHEURISTIC_K_UNKNOWN;
+
+*/
 
 #endif

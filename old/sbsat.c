@@ -24,6 +24,7 @@ int count_BDD_solutions_flag;
 int random_seed;            /* seed for random */
 
 BDDManager *BM_main;
+SmurfManager *SM_main;
 
 uint8_t sbsat_main_init(int, char**);
 uint8_t sbsat_main_load();
@@ -212,6 +213,57 @@ uint8_t sbsat_main() {
   }
 
   if(ret != NO_ERROR && ret != SAT_UNKNOWN) return ret;
+
+  if(do_not_solve != 1) {
+
+    if(solver_flag == 's') {
+      //Smurf solve
+      
+      //fprintf(stderr, "Solving with Smurf Solver\n");
+
+      SM_main = Init_SmurfSolver(BM_main);
+      if(SM_main == NULL) {
+	// ??
+      } else {
+      
+	sbsat_stats_f[STAT_F_SOLVER_START_TIME] = get_runtime();
+	
+	//result = SmurfSolve(SM_main);
+
+	sbsat_stats_f[STAT_F_SOLVER_TOTAL_TIME] = get_runtime() - sbsat_stats_f[STAT_F_SOLVER_START_TIME];
+
+	ret = Final_SimpleSmurfSolver(SM_main);
+      }
+
+      /*
+      if(FS_result == FS_UNKNOWN) {
+	ret = SAT_UNKNOWN;
+      } else if(FS_result == FS_SAT) {
+	ret = SAT;
+      } else if(FS_result == FS_UNSAT) {
+	ret = UNSAT;
+      }
+      */
+
+    } else if(solver_flag == 'p') {
+      PicosatManager *PM_main = (PicosatManager *)sbsat_calloc(1, sizeof(PicosatManager), 9, "PicosatManager");
+      SM_main = Init_SmurfSolver_picosat(BM_main, PM_main);
+
+      sbsat_stats_f[STAT_F_SOLVER_START_TIME] = get_runtime();
+
+      int PM_result = picosatSolve(PM_main);
+
+      sbsat_stats_f[STAT_F_SOLVER_TOTAL_TIME] = get_runtime() - sbsat_stats_f[STAT_F_SOLVER_START_TIME];
+
+      SM_main->ESSM = NULL;
+      sbsat_free((void **)&PM_main);
+      ret = Final_SimpleSmurfSolver(SM_main);
+      ret = PM_result;
+    } else {
+      fprintf(stderr, "no such solver '%c'\n", solver_flag);
+    }
+
+  }
   
   return ret;
 }

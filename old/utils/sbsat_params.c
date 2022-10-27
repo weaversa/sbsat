@@ -74,8 +74,8 @@ t_opt options[] = {
      "Do not call any solver, but do read and preprocess the input and potentially perform translations to various output formats"},
 { &count_BDD_solutions_flag, "count", "count-solutions", P_PRE_INT, V(i:1,"1"), V(i:0,"0"), VAR_NORMAL, 0,
      "Conjoin all BDDs left after VE into the monolithic BDD and count the number of its solutions"},
-//{ &solver_flag, "s", "solver", P_CHAR, V(c:'s',"s"), V(c:'s',"s"), VAR_NORMAL, 0,
-//    "Call a specific solver (SMURF = s, Funcsat = f)" },
+{ &solver_flag, "s", "solver", P_CHAR, V(c:'s',"s"), V(c:'s',"s"), VAR_NORMAL, 0,
+    "Call a specific solver (SMURF = s, Funcsat = f)" },
 
 /* 
  * Preprocessing options
@@ -148,6 +148,36 @@ t_opt options[] = {
      "Existentially quantify a variable away from a BDD when the variable exists in only one BDD"},
 { &sbsat_turn_off_bdds, "bdds-off", "bdds-off", P_PRE_INT, V(i:1,"1"), V(i:0,"0"), VAR_NORMAL, 0,
      "A debugging flag to turn off BDDs"},
+
+
+/* 
+ * SMURF options
+ */
+{ NULL, "", "", P_NONE, {"0"}, {"0"}, VAR_NORMAL, 0, 
+     "\nSMURF options:"},
+{ &use_dropped_var_smurfs, "dvs", "dropped-var-smurfs", P_INT, V(i:0,"0"), V(i:0,"0"), VAR_NORMAL, 0,
+     "Use Dropped-Var SMURFs - can aid in SMURF compression but may slow down search"},
+{ &turn_off_smurf_normalization, "nsn", "", P_PRE_INT, V(i:1,"1"), V(i:0,"0"), VAR_NORMAL, 0,
+     "Turn off SMURF normalization - a debugging flag (should not be used for solving)"},
+{ &find_xor_factors, "xfs", "xor-factor-smurfs", P_PRE_INT, V(i:1,"1"), V(i:0,"0"), VAR_NORMAL, 0,
+     "Use XOR Factor SMURFs - can aid in SMURF compression - only active in conjunction with Gaussian Elimination"},
+{ &gelim_smurfs, "ges", "gelim-smurfs", P_PRE_INT, V(i:1, "1"),  V(i:'0', "0"), VAR_NORMAL, 0,
+     "Use Gaussian Elimination during search"},
+{ &minimize_smurf_clauses, "nmins", "", P_PRE_INT, V(i:0, "0"),  V(i:'1', "1"), VAR_NORMAL, 0,
+     "Turn off minimization of clauses produced by Smurfs"},
+{ &precompute_smurfs, "pcs", "precompute-smurfs", P_INT, V(i:12,"12"),  V(i:12,"12"), VAR_NORMAL, 0,
+    "General Smurfs with more than this many variables will not be precomputed before search"},
+{ &sHeuristic, "H", "heuristic", P_CHAR, V(c:'j',"j"), V(c:'j', "j"), VAR_NORMAL, 0,
+    "Choose heuristic {n=none, j=LSGB, r=random, s=static}"},
+{ &JHEURISTIC_K, "K", "jheuristic-k", P_FLOAT, V(i:0,"0"), V(f:3.0, "3.0"), VAR_NORMAL, 0,
+    "set the value of K"},
+{ &JHEURISTIC_K_TRUE, "", "jheuristic-k-true", P_FLOAT, V(i:0,"0"), V(f:0.0, "0.0"), VAR_NORMAL, 0,
+    "set the value of True state"},
+{ &JHEURISTIC_K_INF, "", "jheuristic-k-inf", P_FLOAT, V(i:0,"0"), V(f:1.0, "1.0"), VAR_NORMAL, 0,
+    "set the value of the inference multiplier"},
+{ &JHEURISTIC_K_UNKNOWN, "", "jheuristic-k-unk", P_FLOAT, V(i:0,"0"), V(f:0.0, "0.0"), VAR_NORMAL, 0,
+    "set the value of unknown states (used with --precompute-states 0)"},
+
 
 /* 
  * Output options

@@ -200,7 +200,6 @@ get_memusage ()
 }
 #endif
 
-/*
 uint8_t check_limits() {
   uintmax_t memusage = get_memusage()/1000000;
   if(memusage > sbsat_stats[STAT_MAX_RAM_USAGE])
@@ -243,7 +242,6 @@ uint8_t check_limits() {
 
   return NO_ERROR;
 }
-*/
 
 int compfunc (const void *x, const void *y) {
    uintmax_t pp, qq;

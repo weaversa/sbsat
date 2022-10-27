@@ -1057,7 +1057,6 @@ struct DdLevelQueue {
 extern "C" {
 #endif
 
-extern void ddClearFlag (DdNode *f);
 extern DdNode * cuddAddExistAbstractRecur(DdManager *manager, DdNode *f, DdNode *cube);
 extern DdNode * cuddAddUnivAbstractRecur(DdManager *manager, DdNode *f, DdNode *cube);
 extern DdNode * cuddAddOrAbstractRecur(DdManager *manager, DdNode *f, DdNode *cube);

@@ -28,71 +28,27 @@
 
 # include <stdio.h>
 
-#if HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#if HAVE_SYS_STAT_H
-# include <sys/stat.h>
-#endif
-#if HAVE_SYS_RESOURCE_H
-# include <sys/resource.h>
-#endif
-#if HAVE_SYS_WAIT_H
-# include <sys/wait.h>
-#endif
-#if STDC_HEADERS
-# include <stdlib.h>
-# include <stddef.h>
-#else
-# if HAVE_STDLIB_H
-#  include <stdlib.h>
-# endif
-#endif
-#if HAVE_STRING_H
-# if !STDC_HEADERS && HAVE_MEMORY_H
-#  include <memory.h>
-# endif
-# include <string.h>
-#endif
-#if HAVE_STRINGS_H
-# include <strings.h>
-#endif
-#if HAVE_INTTYPES_H
-# include <inttypes.h>
-#else
-# if HAVE_STDINT_H
-#  include <stdint.h>
-# endif
-#endif
-#if HAVE_UNISTD_H
-# include <unistd.h>
-#endif
-#if HAVE_CTYPE_H
-# include <ctype.h>
-#endif
-#if HAVE_LIMITS_H
-# include <limits.h>
-#endif
-#if HAVE_ASSERT_H
-# include <assert.h>
-#endif
-#if HAVE_SIGNAL_H
-# include <signal.h>
-#endif
-#if HAVE_MATH_H
-# include <math.h>
-#endif
-#if HAVE_TERMCAP_H
-# include <termcap.h>
-#endif
-#if HAVE_TERMIOS_H
-# include <termios.h>
-#endif
-
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/resource.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <memory.h>
+#include <string.h>
+#include <inttypes.h>
+#include <stdint.h>
+#include <unistd.h>
+#include <ctype.h>
+#include <limits.h>
+#include <assert.h>
+#include <signal.h>
+#include <math.h>
+#include <termcap.h>
+#include <termios.h>
 #include <gmp.h>
 #include <regex.h>
-# include <sys/time.h>
-# include <time.h>
+#include <sys/time.h>
+#include <time.h>
 
 #ifndef INT_MAX
 #define INT_MAX 0x7FFFFFFF
