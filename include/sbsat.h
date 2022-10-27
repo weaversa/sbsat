@@ -31,6 +31,7 @@
 #include "aiger.h"
 #include "../lib/picosat/include/picosat.h"
 #include "../src/solvers/gelim/gelim_solver.h"
+#include "../lib/funcsat/src/funcsat.h"
 #include "equiv.h"
 #include "inference_queue.h"
 #include "bdd_manager.h"

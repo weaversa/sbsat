@@ -103,7 +103,6 @@ static long double ddLdblCountMintermAux(DdManager const *manager, DdNode *node,
 static double ddCountPathAux (DdNode *node, st_table *table);
 static double ddCountPathsToNonZero (DdNode * N, st_table * table);
 static void ddSupportStep (DdNode *f, int *support);
-static void ddClearFlag (DdNode *f);
 static int ddLeavesInt (DdNode *n);
 static int ddPickArbitraryMinterms (DdManager *dd, DdNode *node, int nvars, int nminterms, char **string);
 static int ddPickRepresentativeCube (DdManager *dd, DdNode *node, double *weight, char *string);

@@ -1,10 +1,9 @@
 EXTRAS = Makefile LICENSE.md README.md AUTHORS.md
 
-HEADERS := $(shell find include src -type f -name '*.h')
+HEADER_DIRS := $(shell find include src -type d)
+HEADERS := $(shell find $(HEADER_DIRS) -type f -name '*.h')
 SOURCES := $(shell find src -type f -name '*.c')
 OBJECTS = $(SOURCES:src/%.c=obj/%.o)
-
-HEADER_DIRS := $(shell find include src -type d)
 
 SBSATLIB = sbsat
 CC = gcc
@@ -40,7 +39,7 @@ lib/picosat/lib/libpicosat.a:
 
 $(OBJECTS): obj/%.o : src/%.c Makefile
 	@echo "Compiling "$<
-	@[ -d $(dirname $@)] || mkdir -p $(dirname $@)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 lib/lib$(SBSATLIB).a: $(OBJECTS) Makefile lib/cudd/lib/libcudd.a lib/picosat/lib/libpicosat.a
