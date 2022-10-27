@@ -34,12 +34,6 @@
 #if HAVE_SYS_STAT_H
 # include <sys/stat.h>
 #endif
-#if HAVE_SYS_TIME_H
-# include <sys/time.h>
-#endif
-#if HAVE_TIME_H
-# include <time.h>
-#endif
 #if HAVE_SYS_RESOURCE_H
 # include <sys/resource.h>
 #endif
@@ -97,6 +91,8 @@
 
 #include <gmp.h>
 #include <regex.h>
+# include <sys/time.h>
+# include <time.h>
 
 #ifndef INT_MAX
 #define INT_MAX 0x7FFFFFFF
